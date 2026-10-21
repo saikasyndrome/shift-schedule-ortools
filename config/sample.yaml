@@ -12,82 +12,82 @@ schedule:
   alternatives_seconds: 20
 staff:
 - name: Alice
-  floor: [さくら, 4階]
+  floor: [floor_a, floor_b]
   night_ok: true
   day_ok: true
   leader: true
   max_nights: 5
-  ojt_teacher: [さくら, 4階]
+  ojt_teacher: [floor_a, floor_b]
 - name: Bob
-  floor: [{floor: さくら, type: early}, 4階]
+  floor: [{floor: floor_a, type: early}, floor_b]
   night_ok: true
   day_ok: true
   leader: true
   max_nights: 5
-  ojt_teacher: [4階]
+  ojt_teacher: [floor_b]
 - name: Carol
-  floor: [さくら, 4階]
+  floor: [floor_a, floor_b]
   night_ok: false
   day_ok: true
-  ojt_teacher: [{floor: さくら, type: early}]
+  ojt_teacher: [{floor: floor_a, type: early}]
 - name: Dana
-  floor: [4階]
+  floor: [floor_b]
   night_ok: false
 - name: Eve
-  floor: [さくら, 4階]
+  floor: [floor_a, floor_b]
   night_ok: true
   max_nights: 7
   day_ok: true
-  ojt_teacher: [{floor: さくら, type: early}]
+  ojt_teacher: [{floor: floor_a, type: early}]
 - name: Frank
-  floor: [4階]
+  floor: [floor_b]
   night_ok: true
   max_nights: 7
-  ojt_target: [{floor: さくら, type: early}]
+  ojt_target: [{floor: floor_a, type: early}]
 - name: Grace
-  floor: [4階]
+  floor: [floor_b]
   night_ok: true
   max_nights: 7
 - name: Heidi
-  floor: [4階]
-  ojt_target: [4階]
+  floor: [floor_b]
+  ojt_target: [floor_b]
   ojt_count: 6
   night_ok: false
 - name: Ivan
-  floor: [さくら]
+  floor: [floor_a]
   night_ok: false
   day_ok: true
 shift_types:
 - code: 早1
-  name: さくら早番
+  name: floor_a early
   start: "07:00"
   end: "16:00"
   hours: 9
-  floor: さくら
+  floor: floor_a
   type: early
   required: true
 - code: 遅1
-  name: さくら遅番
+  name: floor_a late
   start: "10:30"
   end: "19:30"
   hours: 9
-  floor: さくら
+  floor: floor_a
   type: late
   required: true
 - code: 早4
-  name: 4階早番
+  name: floor_b early
   start: "07:00"
   end: "16:00"
   hours: 9
-  floor: 4階
+  floor: floor_b
   type: early
   required: true
 - code: 遅4
-  name: 4階遅番
+  name: floor_b late
   start: "10:30"
   end: "19:30"
   hours: 9
-  floor: 4階
+  floor: floor_b
   type: late
   required: true
 - code: 日勤

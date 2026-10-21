@@ -340,6 +340,7 @@ class ShiftSolver:
                 if matches_all:
                     model.Add(sum(matches_all) >= target_count)
                 else:
+                    # No OJT match vars exist, but ojt_count>0 is required → force INFEASIBLE.
                     impossible = model.NewBoolVar(f"ojt_impossible_{name}")
                     model.Add(impossible == 1)
                     model.Add(impossible == 0)
@@ -423,6 +424,8 @@ class ShiftSolver:
         for key, label in DIAG_GROUPS:
             model, _x, _ojt_match, _meta = self._build_model(relax={key})
             solver = cp_model.CpSolver()
+            # Bound wall-clock high enough not to clip; the real budget is
+            # max_deterministic_time (deterministic time units ≈ time_limit).
             solver.parameters.max_time_in_seconds = max(time_limit, 60)
             solver.parameters.max_deterministic_time = time_limit
             solver.parameters.num_search_workers = 1

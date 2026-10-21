@@ -5,7 +5,7 @@
 Constraint-based **staff shift scheduler** in Python.
 
 - **Rule values** (roster, `off_days`, caps, exceptions, OJT counts, …) live in YAML → [docs/config.md](docs/config.md)
-- **Shift scheme** (codes `早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤` and ward labels like `さくら`/`4階`) is **fixed in code** (summary, balance targets, daytime checks, Excel legend, …)
+- **Shift scheme** (codes `早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤` and ward labels like `floor_a`/`floor_b`) is **fixed in code** (summary, balance targets, daytime checks, Excel legend, …)
 - **Google OR-Tools CP-SAT** for hard constraints + soft goals → [docs/architecture.md](docs/architecture.md)
 - Excel export
 

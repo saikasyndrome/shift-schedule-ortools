@@ -31,7 +31,7 @@ OJT target fulfillment is ranked above early/late balance when comparing candida
 | `max_nights` | Cap on night shifts this month |
 | `max_consecutive` | Optional personal override of `rules.max_consecutive` |
 | `note` | Free text; ignored by logic |
-| `ojt_teacher` | Floor(s) this person can teach (`さくら` / `4階` / `夜勤`, or typed objects / lists) |
+| `ojt_teacher` | Floor(s) this person can teach (`floor_a` / `floor_b` / `夜勤`, or typed objects / lists) |
 | `ojt_target` | Floor(s) for training. Solo eligibility still follows `staff.floor` |
 | `ojt_count` | Hard monthly OJT target (like `off_days`). Omit → soft “as many as matched” |
 

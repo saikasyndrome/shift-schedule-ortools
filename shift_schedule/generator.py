@@ -241,15 +241,15 @@ class ShiftGenerator:
         return early, late
 
     def floor_counts(self, name):
-        sakura = floor4 = 0
+        count_a = count_b = 0
         for v in self.result[name].values():
             code = self.base_code(v)
             fl = self.shift_map.get(code, {}).get("floor")
-            if fl == "さくら":
-                sakura += 1
-            elif fl == "4階":
-                floor4 += 1
-        return sakura, floor4
+            if fl == "floor_a":
+                count_a += 1
+            elif fl == "floor_b":
+                count_b += 1
+        return count_a, count_b
 
     def code_counts(self, name):
         counts = {"早1": 0, "遅1": 0, "早4": 0, "遅4": 0}
@@ -1178,10 +1178,10 @@ class ExcelExporter:
         c.font      = self.fn(size=8, bold=True)
         c.alignment = self.al(h="left")
         legend = [
-            (3,  "早1=さくら早番", "D5F5E3"),
-            (5,  "遅1=さくら遅番", "D6EAF8"),
-            (7,  "早4=4階早番",    "FEF9E7"),
-            (9,  "遅4=4階遅番",    "FDEBD0"),
+            (3,  "早1=floor_a early", "D5F5E3"),
+            (5,  "遅1=floor_a late", "D6EAF8"),
+            (7,  "早4=floor_b early",    "FEF9E7"),
+            (9,  "遅4=floor_b late",    "FDEBD0"),
             (11, "日勤",           "F0B27A"),
             (13, "夜勤",           "F9EBEA"),
             (15, "明け",           "E8DAEF"),
