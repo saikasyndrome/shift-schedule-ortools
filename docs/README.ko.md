@@ -2,10 +2,13 @@
 
 *다른 언어: [English](../README.md), [日本語](README.ja.md)*
 
-YAML 규칙 + **OR-Tools CP-SAT**로 근무표를 만들고 Excel로 출력합니다.
+YAML로 **규칙 값**을 넣고 **OR-Tools CP-SAT**로 근무표를 만든 뒤 Excel로 출력합니다.
 
-- 설정 필드: [config.md](config.md)
-- 구조/엔진: [architecture.md](architecture.md)
+- 인원·`off_days`·예외·OJT 횟수 등은 YAML로 바꿈 → [config.md](config.md)
+- 시프트 코드(`早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤`)와 층 라벨(`さくら`/`4階` 등)은 코드에 고정 (집계·밸런스·범례 등)
+- 엔진 흐름 → [architecture.md](architecture.md)
+
+한 줄로: **규칙은 설정화, 시프트 체계는 이 형태로 고정.**
 
 ## 구조
 

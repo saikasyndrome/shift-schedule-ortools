@@ -14,6 +14,14 @@ config/sample.yaml
  ExcelExporter → shift_YYYYMM_*.xlsx
 ```
 
+## What YAML configures vs what code assumes
+
+| In YAML | Hardcoded in Python |
+|---|---|
+| Staff roster, floors *assigned to people*, `rules.*` values, exceptions, OJT counts, schedule month/engine | Shift **code names** (`早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤`), balance/summary columns, daytime predicates, Excel legend text, and logic that keys off those strings |
+
+`shift_types` in YAML still supplies hours/labels/`required`, but renaming the core codes without code changes will break matching, counts, and export.
+
 ## `shift_schedule.generator`
 
 - Owns config parsing and result containers (`result`, `ojt_*`, `hard_errors`)

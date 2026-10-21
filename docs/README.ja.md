@@ -2,10 +2,13 @@
 
 *他の言語: [English](../README.md), [한국어](README.ko.md)*
 
-YAML ルールと **OR-Tools CP-SAT** でシフト表を作り、Excel に出力します。
+YAML で **ルール値** を入れ、**OR-Tools CP-SAT** でシフト表を作り Excel に出力します。
 
-- 設定フィールド: [config.md](config.md)
-- 構成/エンジン: [architecture.md](architecture.md)
+- 人員・`off_days`・例外・OJT 回数などは YAML で変更 → [config.md](config.md)
+- シフトコード（`早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤`）と病棟ラベル（`さくら`/`4階` など）はコード側に固定（集計・バランス・凡例など）
+- エンジンの流れ → [architecture.md](architecture.md)
+
+一言で: **ルールは設定化、シフト体系はこの形で固定。**
 
 ## 構成
 

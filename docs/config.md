@@ -2,6 +2,8 @@
 
 Sample file: [`config/sample.yaml`](../config/sample.yaml).
 
+**Scope:** YAML sets *values* (who works where, caps, exceptions). The *shift vocabulary* (`早1`/`遅1`/`早4`/`遅4`/`夜勤`/`明け`/`休み`/`有給`/`日勤` and ward strings used in balance/summary/legend) is assumed by the Python code — see [architecture.md](architecture.md).
+
 ## `schedule`
 
 | Key | Default | Notes |
@@ -39,7 +41,7 @@ OJT target fulfillment is ranked above early/late balance when comparing candida
 
 | Key | Notes |
 |---|---|
-| `code` | Display / assignment key. Codes `早1` `遅1` `早4` `遅4` `夜勤` `明け` `休み` are referenced in code — rename carefully |
+| `code` | Display / assignment key. Core codes `早1` `遅1` `早4` `遅4` `夜勤` `明け` `休み` `有給` `日勤` are **string-matched in code** (not fully data-driven) — renaming without code edits breaks the engine |
 | `name` | Label only |
 | `start` / `end` | Display only |
 | `hours` | Used in total-hours summary |
