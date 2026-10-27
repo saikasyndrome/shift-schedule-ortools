@@ -57,10 +57,10 @@ All hard. Failure → no Excel, exit `1`.
 
 | Key | Notes |
 |---|---|
-| `max_consecutive` | Max consecutive work days (staff override allowed) |
+| `max_consecutive` | Max consecutive work days (staff override allowed). **`明け` counts as work** (same as work-day tally); only `休み`/`有給` break the streak |
 | `off_days` | **Required.** Exact pure-off day count per person (`明け`/`有給`/OJT excluded; `exceptions type: 休み` counts) |
 | `night_required_per_day` | Default `1` |
-| `max_consecutive_off` | Default `2`; exceptions can intentionally exceed |
+| `max_consecutive_off` | Default `2`. Cap applies **even when exceptions force `休み`/`有給`**; exception-only streaks over the cap → INFEASIBLE |
 | `no_late_to_early` | Block late → early (and day treated as both sides of that rule) |
 
 Unused today (kept for compatibility): `night_set`, `min_leader_daytime`.

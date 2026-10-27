@@ -32,9 +32,11 @@ config/sample.yaml
 
 - Bool var per (staff, day, eligible shift code)
 - Hard: exceptions, night chain, `no_late_to_early`, consecutive caps, exact `off_days`, night/required coverage, `max_nights`, OJT solo, `ojt_count`
+  - `max_consecutive`: **`明け` is work** (aligned with work-day count); only `休み`/`有給` break the streak
+  - `max_consecutive_off`: applies to exception-forced `休み`/`有給` too (no “intentional long holiday” bypass)
 - Soft (lexicographic): OJT counts → early/late balance → leader daytime
 - `solve_alternatives`: collect equal-best solutions under a time budget
-- On `INFEASIBLE`, relax diagnostic groups one-by-one to hint which rule set conflicts
+- On `INFEASIBLE`, relax diagnostic groups one-by-one to hint which rule set conflicts (see [CHANGELOG.md](CHANGELOG.md) for limits and planned multi-relax / attribution improvements)
 - Diagnosis timers: `max_deterministic_time = time_limit` is the intended search budget; `max_time_in_seconds = max(time_limit, 60)` is only a high wall-clock ceiling so wall-clock does not cut the run before deterministic time is exhausted (not “always run at least 60s”)
 
 ## CLI

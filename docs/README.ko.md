@@ -10,13 +10,15 @@ YAML로 **규칙 값**을 넣고 **OR-Tools CP-SAT**로 근무표를 만든 뒤 
 
 한 줄로: **규칙은 설정화, 시프트 체계는 이 형태로 고정.**
 
+**버전·문제/해결·진단 개선 로드맵:** [CHANGELOG.md](CHANGELOG.md) (현재 **0.2.0**).
+
 ## 구조
 
 ```text
 config/sample.yaml
 shift_schedule/   # generator · solver · CLI
 tests/
-docs/
+docs/             # CHANGELOG · config · architecture
 ```
 
 ## 빠른 시작

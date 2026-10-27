@@ -11,6 +11,8 @@ Constraint-based **staff shift scheduler** in Python.
 
 In short: rules are configurable; the shift vocabulary is this domain shape.
 
+**Versions / problems & fixes / diagnosis roadmap:** [docs/CHANGELOG.md](docs/CHANGELOG.md) (current **0.2.0**).
+
 ## Layout
 
 ```text
@@ -22,6 +24,7 @@ In short: rules are configurable; the shift vocabulary is this domain shape.
 │   └── __main__.py          # CLI
 ├── tests/test_solver.py
 └── docs/
+    ├── CHANGELOG.md         # versioned problems → fixes → improvements
     ├── config.md
     └── architecture.md
 ```

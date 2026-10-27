@@ -135,9 +135,7 @@ exceptions:
 - name: Alice
   date: "2026-09-26"
   type: 休み
-- name: Alice
-  date: "2026-09-27"
-  type: 休み
+  # 27日の休み例外は削除: max_consecutive_off=2 を例外込みで守るため
 - name: Alice
   date: "2026-09-28"
   type: 遅4

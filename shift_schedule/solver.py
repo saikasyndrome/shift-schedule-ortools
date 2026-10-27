@@ -210,11 +210,12 @@ class ShiftSolver:
                         if (name, 1, c) in x:
                             model.Add(x[(name, 1, c)] == 0)
 
+        # max_consecutive: 明けは勤務日数と同じく連続勤務に含める。休み/有給だけが連続を切る。
         work = {}
         for s in self.staff:
             name = s["name"]
             for day in range(1, self.num_days + 1):
-                off_vars = [x[(name, day, c)] for c in ("休み", "明け", "有給") if (name, day, c) in x]
+                off_vars = [x[(name, day, c)] for c in ("休み", "有給") if (name, day, c) in x]
                 w = model.NewBoolVar(f"work_{name}_{day}")
                 model.Add(w == 1 - sum(off_vars))
                 work[(name, day)] = w
@@ -227,27 +228,19 @@ class ShiftSolver:
                     terms = []
                     for d in range(start, start + mc + 1):
                         if d < 1:
-                            terms.append(
-                                1 if self.gen.result[name].get(d, "") not in ("", "休み", "明け", "有給", "?") else 0
-                            )
+                            code = self.gen.base_code(self.gen.result[name].get(d, ""))
+                            terms.append(1 if code not in ("", "休み", "有給", "?") else 0)
                         else:
                             terms.append(work[(name, d)])
                     model.Add(sum(terms) <= mc)
 
+        # max_consecutive_off: exceptions指定の休み/有給も上限に含める(ルール優先)。
         if "max_consecutive_off" not in relax:
             off_cap = self.rules.get("max_consecutive_off", 2)
             for s in self.staff:
                 name = s["name"]
                 for start in range(-off_cap, self.num_days - off_cap):
                     window = range(start, start + off_cap + 1)
-                    forced = any(
-                        d >= 1
-                        and (exc := self.gen.is_exception(name, d))
-                        and exc["type"] in ("休み", "有給")
-                        for d in window
-                    )
-                    if forced:
-                        continue
                     terms = []
                     for d in window:
                         if d < 1:
@@ -512,10 +505,29 @@ class ShiftSolver:
                     f"  ❌ {s['name']}: OJT目標{target_count}回 > 稼働日数{work_days_budget}日"
                     f"(1日に複数回は入れないため、この時点で確実に不可能)"
                 )
+        off_cap = self.rules.get("max_consecutive_off", 2)
+        for s in self.staff:
+            name = s["name"]
+            streak = []
+            for day in range(1, self.num_days + 1):
+                exc = self.gen.is_exception(name, day)
+                if exc and exc["type"] in ("休み", "有給"):
+                    streak.append(day)
+                else:
+                    if len(streak) > off_cap:
+                        obvious_errors.append(
+                            f"  ❌ {name}: exceptionsの休み/有給が{streak[0]}〜{streak[-1]}日"
+                            f"で{len(streak)}連休(上限 max_consecutive_off={off_cap})"
+                        )
+                    streak = []
+            if len(streak) > off_cap:
+                obvious_errors.append(
+                    f"  ❌ {name}: exceptionsの休み/有給が{streak[0]}〜{streak[-1]}日"
+                    f"で{len(streak)}連休(上限 max_consecutive_off={off_cap})"
+                )
         if obvious_errors:
             self.gen.hard_errors = [
-                "❌ OJT目標(ojt_count)を絶対ルールを守ったまま満たす組み合わせが存在しません "
-                "(稼働日数を超えた目標値が設定されています)"
+                "❌ 設定時点で絶対ルールを満たせない項目があります"
             ] + obvious_errors
             return None
 

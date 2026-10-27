@@ -97,13 +97,14 @@ class ShiftGenerator:
             return self.result[name].get(0, "")  # 前月末日
 
     def consecutive_count(self, name, day):
+        # 明けは勤務日数カウントと同様に連続勤務へ含める(休み/有給/? だけが連続を切る)。
         count = 0
 
         d = day - 1
         while d >= 1:
             s = self.result[name].get(d, "")
             base = self.base_code(s)
-            if base in ("", "休み", "明け", "有給", "?"):
+            if base in ("", "休み", "有給", "?"):
                 return count
             count += 1
             d -= 1
@@ -113,7 +114,7 @@ class ShiftGenerator:
             s = self.result[name].get(prev_key, "")
             if s == "":
                 break  # 前月データなし → カウント終了
-            if s in ("休み", "明け", "有給", "?"):
+            if s in ("休み", "有給", "?"):
                 break
             count += 1
             prev_key -= 1
@@ -709,16 +710,8 @@ class ShiftGenerator:
         def _off_like(code):
             return self.base_code(code) in ("休み", "有給")
 
-        def _window_has_forced_exception(name, day):
-            for d in range(day - OFF_CAP, day + OFF_CAP + 1):
-                exc = self.is_exception(name, d)
-                if exc and exc["type"] in ("休み", "有給"):
-                    return True
-            return False
-
         def _would_exceed_off_cap(name, day):
-            if _window_has_forced_exception(name, day):
-                return False
+            """exceptions指定の休み/有給も上限に含める(ルール優先)。"""
             for start in range(day - OFF_CAP, day + 1):
                 end = start + OFF_CAP
                 count = 0

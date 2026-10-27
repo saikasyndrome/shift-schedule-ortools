@@ -67,19 +67,17 @@ def test_no_late_to_early(gen):
                 )
 
 def test_max_consecutive_off(gen):
-    print("\n[4b] max_consecutive_off (exceptionsで明示指定していない連続休み・有給は上限以内か)")
+    print("\n[4b] max_consecutive_off (連続休み・有給は例外指定込みで上限以内か)")
     cap = gen.rules.get("max_consecutive_off", 2)
     for s in gen.staff:
         name = s["name"]
         streak_days = []
 
         def _flush():
-            if len(streak_days) > cap:
-                has_exc = any(gen.is_exception(name, d) for d in streak_days)
-                check(
-                    has_exc,
-                    f"{name} の{streak_days}連続休み・有給(上限{cap}日超)はexceptionsで明示指定されているはず",
-                )
+            check(
+                len(streak_days) <= cap,
+                f"{name} の{streak_days}連続休み・有給が上限{cap}日を超えていない",
+            )
 
         for day in range(1, gen.num_days + 1):
             code = gen.base_code(gen.result[name].get(day, ""))
@@ -107,7 +105,7 @@ def test_max_consecutive(gen):
         max_streak = 0
         for day in range(1, gen.num_days + 1):
             code = gen.result[name].get(day, "")
-            is_work = code not in ("", "休み", "明け", "有給", "?")
+            is_work = code not in ("", "休み", "有給", "?")  # 明けも連続勤務に含む
             streak = streak + 1 if is_work else 0
             max_streak = max(max_streak, streak)
         check(max_streak <= mc, f"{name}の最大連続勤務日数が{mc}日以内 (実際: {max_streak}日)")
